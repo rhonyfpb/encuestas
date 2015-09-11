@@ -1,0 +1,30 @@
+{
+	"survey": {
+		"name": "Krofis",
+		"subname": "Encuesta de satisfacción",
+		"elements": [
+			{
+				"type": "selection",
+				"label": "¿Cómo le pareció el sabor de los Krofis?",
+				"options": [
+					"Excelente", "Bueno", "Regular", "Malo", "Pésimo"
+				]
+			},
+			{
+				"type": "selection",
+				"label": "¿Qué considera acerca del precio de los Krofis?",
+				"options": [
+					"Son muy caros", "Tienen el precio adecuado", "Son muy baratos"
+				]
+			},
+			{
+				"type": "boolean",
+				"label": "¿Volvería a comprar algún producto nuestro?"
+			},
+			{
+				"type": "boolean",
+				"label": "¿Volvería a comprar más Krofis?"
+			}
+		]
+	}
+}
