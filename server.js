@@ -3,13 +3,14 @@ var express = require("express");
 var hndl = require("express-handlebars").create({
 	defaultLayout: "main"
 });
+
 var routes = require("./routes");
 
 var app = express();
 app.engine("handlebars", hndl.engine);
 app.set("view engine", "handlebars");
 
-app.set("port", 8080);
+app.set("port", 8081);
 
 nconf.file("./data/conf.json");
 
@@ -21,13 +22,10 @@ nconf.file(pathData);
 
 var survey = nconf.get().survey;
 
-console.log("survey = " + survey);
+console.log("survey = " + survey.elements[0].label);
 
-routes(app);
+routes(app, survey, hndl);
 
 app.listen(app.get("port"), function() {
 	console.log("Servidor corriento en el puerto " + app.get("port") +  "; para terminar presione Ctrl-C");
 });
-
-
-
