@@ -36,15 +36,15 @@ module.exports = function(app, survey, hndl) {
 	function renderControl(obj) {
 		var result = "", length, i;
 
-		result += "<div class=\"control\">\n";
+		result += "<div class=\"control\" data-id=\"" + obj.id + "\" data-type=\"" + obj.type + "\">\n";
 
-		result += obj.label ? "<label>" + obj.label + "</label>\n<br/>\n" : "";
+		result += obj.label ? "<label>" + obj.label + "</label>\n" : "";
 
 		switch(obj.type) {
 			case "boolean":
 				result += "<div class=\"control-boolean\">\n";
-				result += "<span class=\"control-boolean-yes\">Sí</span>\n";
-				result += "<span class=\"control-boolean-no\">No</span>\n";
+				result += "<span class=\"control-boolean-yes button\">Sí</span>\n";
+				result += "<span class=\"control-boolean-no button\">No</span>\n";
 				result += "</div>\n";
 				break;
 			case "selection":
@@ -53,7 +53,7 @@ module.exports = function(app, survey, hndl) {
 				if(length) {
 					i = 0;
 					for(; i<length;) {
-						result += "<span class=\"control-selection-option\">" + (obj.options[i++]) + "</span>\n";
+						result += "<span class=\"control-selection-selector\">&nbsp;</span><span class=\"control-selection-option\">" + (obj.options[i++]) + "</span>\n";
 					}
 				}
 				result += "</div>\n";

@@ -12,6 +12,8 @@ app.set("view engine", "handlebars");
 
 app.set("port", 8081);
 
+app.use(express.static(__dirname + "/public"));
+
 nconf.file("./data/conf.json");
 
 var pathData = nconf.get().data;
