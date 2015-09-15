@@ -89,3 +89,15 @@ header h1, header h2 {
     background: #4479BA;
     color: #FFFFFF;
 }
+
+.graphic {
+    border: 1px solid #333333;
+    border-radius: 4px;
+    width: 80%;
+    margin: 10px auto;
+    text-align: center;
+}
+.graphic .graphic-name {
+	display: block;
+	margin-bottom: 4px;
+}

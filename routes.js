@@ -21,22 +21,25 @@ module.exports = function(app, survey, db) {
 		for(; j < survey.elements.length; ) {
 			elemento = survey.elements[j++];
 			resultadoFinal[elemento.id] = {};
+			resultadoFinal[elemento.id].id = elemento.id;
 			resultadoFinal[elemento.id]["type"] = elemento.type;
+			resultadoFinal[elemento.id].label = elemento.label;
 			switch(elemento.type) {
 				case "selection":
 					var k = 0;
-					resultadoFinal[elemento.id]["data"] = {};
+					resultadoFinal[elemento.id]["data"] = [];
 					for(; k < elemento.options.length; ) {
-						resultadoFinal[elemento.id]["data"][k] = {
-							label: elemento.options[k++],
-							value: 0
-						};
+						resultadoFinal[elemento.id].data.push({
+							label: elemento.options[k],
+							value: 0,
+							color: elemento.colors[k++]
+						});
 					}
 					break;
 				case "boolean":
-					resultadoFinal[elemento.id]["data"] = {};
-					resultadoFinal[elemento.id]["data"][0] = { label: "Sí", value: 0 };
-					resultadoFinal[elemento.id]["data"][1] = { label: "No", value: 0 };
+					resultadoFinal[elemento.id]["data"] = [];
+					resultadoFinal[elemento.id].data.push({ label: "Sí", value: 0, color: elemento.colors[0] });
+					resultadoFinal[elemento.id].data.push({ label: "No", value: 0, color: elemento.colors[1] });
 					break;
 			}
 		}
@@ -72,7 +75,26 @@ module.exports = function(app, survey, db) {
 
 		console.log("resFINAL2", JSON.stringify(resultadoFinal));
 		console.log(result);
-		res.render("result");
+		res.render("result", {
+			data: resultadoFinal,
+			helpers: {
+				renderGraphic: function(obj) {
+					console.log("obj", obj);
+					var result = "";
+					result += "<div class=\"graphic\">\n";
+					result += "<span class=\"graphic-name\">" + obj.label + "</span>\n";
+					result += "<canvas id=\"" + obj.id + "Chart\" width=\"200px\" height=\"200px\"></canvas>\n";
+
+					result += "<script>\n"
+					result += "\tvar " + obj.id + "Ctx = document.getElementById(\"" + obj.id + "Chart\").getContext(\"2d\");\n";
+					result += "\tvar " + obj.id + "PieChart = new Chart(" + obj.id + "Ctx).Pie(" + JSON.stringify(obj.data) + ", { onAnimationComplete: function() { this.showTooltip(this.segments, true); }, tooltipEvents: [] });\n";
+					result += "</script>\n";
+
+					result += "</div>\n";
+					return result;
+				}
+			}
+		});
 	});
 
 	app.post("/process", function(req, res) {
