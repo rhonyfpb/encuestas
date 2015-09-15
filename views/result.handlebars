@@ -1,0 +1,38 @@
+<header>
+	<h1>Ver resultados</h1>
+</header>
+<div class="actions">
+	<a href="./" class="button back">Volver</a>
+</div>
+<canvas id="myChart" width="200px" height="200px"></canvas>
+<script>
+	var ctx = document.getElementById("myChart").getContext("2d");
+	var myPieChart = new Chart(ctx).Pie([
+    {
+        value: 300,
+        /*color:"#F7464A",*/
+        /*highlight: "#FF5A5E",*/
+        label: "Red"
+    },
+    {
+        value: 50,
+        /*color: "#46BFBD",*/
+        /*highlight: "#5AD3D1",*/
+        label: "Green"
+    }], {
+    	/*responsive: true,
+    	animation: false,
+    	animationSteps: 100,
+ 		animationEasing: 'easeInOutQuart'*/
+ 		tooltipTemplate: "<%= label %>",
+        
+        onAnimationComplete: function()
+        {
+            this.showTooltip(this.segments, true);
+        },
+        
+        tooltipEvents: [],
+        
+        showTooltips: true
+    });
+</script>

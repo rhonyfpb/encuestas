@@ -27,23 +27,52 @@ $(document).ready(function() {
 	$("#send-survey").click(function() {
 		var controls = $(".control");
 		var results = {};
-		$.each(control, function(i, control) {
+		$.each(controls, function(i, control) {
+			control = $(control);
 			var id = control.data("id");
 			var type = control.data("type");
-			var value;
+			var value, options, selected;
 			if(!id) {
 				results = false;
 				return false;
 			}
 			switch(type) {
 				case "selection":
-					//value = 
+					options = $(".control-selection-option", control);
+					selected = $(".control-selection-option.selected", control);
+					value = options.index(selected);
+					if(value === -1) {
+						results = false;
+						return false;
+					} else {
+						results[id] = value;
+					}
+					break;
+				case "boolean":
+					options = $(".button", control);
+					selected = $(".button.selected", control);
+					value = options.index(selected);
+					if(value === -1) {
+						results = false;
+						return false;
+					} else {
+						value = value === 0 ? true : false;
+						results[id] = value;
+					}
 					break;
 			}
 		});
 		if(!results) {
 			alert("Selecciona todos los campos de la encuesta");
 			return;
+		} else {
+			$.ajax({
+				url: "/process",
+				method: "POST",
+				data: results
+			}).done(function() {
+				window.location.href = "/";
+			});
 		}
 	});
 });

@@ -4,7 +4,7 @@
 		"subname": "Encuesta de satisfacción",
 		"elements": [
 			{
-				"id": 1,
+				"id": "p1",
 				"type": "selection",
 				"label": "¿Cómo le pareció el sabor de los Krofis?",
 				"options": [
@@ -12,7 +12,7 @@
 				]
 			},
 			{
-				"id": 2,
+				"id": "p2",
 				"type": "selection",
 				"label": "¿Qué considera acerca del precio de los Krofis?",
 				"options": [
@@ -20,12 +20,12 @@
 				]
 			},
 			{
-				"id": 3,
+				"id": "p3",
 				"type": "boolean",
 				"label": "¿Volvería a comprar algún producto nuestro?"
 			},
 			{
-				"id": 4,
+				"id": "p4",
 				"type": "boolean",
 				"label": "¿Volvería a comprar más Krofis?"
 			}

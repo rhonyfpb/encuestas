@@ -1,5 +1,7 @@
 var nconf = require("nconf");
+var db = require("diskdb");
 var express = require("express");
+var bodyParser = require("body-parser");
 var hndl = require("express-handlebars").create({
 	defaultLayout: "main"
 });
@@ -13,6 +15,10 @@ app.set("view engine", "handlebars");
 app.set("port", 8081);
 
 app.use(express.static(__dirname + "/public"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
 
 nconf.file("./data/conf.json");
 
@@ -24,9 +30,9 @@ nconf.file(pathData);
 
 var survey = nconf.get().survey;
 
-console.log("survey = " + survey.elements[0].label);
+db.connect(__dirname, [ survey.name ]);
 
-routes(app, survey, hndl);
+routes(app, survey, db);
 
 app.listen(app.get("port"), function() {
 	console.log("Servidor corriento en el puerto " + app.get("port") +  "; para terminar presione Ctrl-C");
